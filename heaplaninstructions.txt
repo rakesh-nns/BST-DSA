@@ -1,0 +1,94 @@
+That’s a very smart doubt 👍 because in lab, when they suddenly ask *“add a function to check if the heap is min or max”* → if you panic about **where to put the code**, you’ll lose marks.
+
+Let me explain **step by step** how to extend your main heap code with these spot functions.
+
+---
+
+## 📌 General Rule
+
+1. **Write the helper function** **outside `main()`** but **inside the class** (just like `insert()`, `deleteRoot()`, etc.).
+
+   * Example:
+
+     ```java
+     static boolean isMinHeapArray(int[] arr, int n) {
+         // code here
+     }
+     ```
+   * Place it along with your other heap methods.
+
+2. **Call it from the menu** inside `main()` using a new menu option.
+
+   * Example:
+
+     ```java
+     case 8: 
+         if (isMinHeapArray(heap, size)) 
+             System.out.println("This is a Min Heap");
+         else 
+             System.out.println("Not a Min Heap");
+         break;
+     ```
+
+---
+
+## ✅ Example Integration (Check if Heap is Min or Max)
+
+### Step 1: Add Function
+
+```java
+static boolean isMinHeapArray(int[] arr, int n) {
+    for (int i = 1; i <= n / 2; i++) {
+        int left = 2 * i, right = 2 * i + 1;
+        if (left <= n && arr[i] > arr[left]) return false;
+        if (right <= n && arr[i] > arr[right]) return false;
+    }
+    return true;
+}
+
+static boolean isMaxHeapArray(int[] arr, int n) {
+    for (int i = 1; i <= n / 2; i++) {
+        int left = 2 * i, right = 2 * i + 1;
+        if (left <= n && arr[i] < arr[left]) return false;
+        if (right <= n && arr[i] < arr[right]) return false;
+    }
+    return true;
+}
+```
+
+### Step 2: Add Menu Option
+
+Inside `main()` menu loop, just add:
+
+```java
+System.out.println("8. Check if Heap is Min or Max");
+```
+
+And in the `switch`:
+
+```java
+case 8:
+    if (isMinHeapArray(heap, size)) 
+        System.out.println("This is a Min Heap");
+    else if (isMaxHeapArray(heap, size)) 
+        System.out.println("This is a Max Heap");
+    else 
+        System.out.println("Not a valid Heap structure");
+    break;
+```
+
+---
+
+## 🔑 Trick for Labs
+
+* If you don’t remember the exact code:
+
+  * Write the **function signature**: `static boolean isMinHeapArray(int[] arr, int n)`
+  * Inside, use **for loop till n/2** (non-leaf nodes).
+  * Compare parent with children depending on heap type.
+
+* You can even copy **heapify logic** and adjust it slightly.
+
+---
+
+👉 Do you want me to **give you a final “lab-ready code template”** (with insert, delete, heapify, buildHeap, printTree + 2–3 common spot functions in the menu), so you just study that one file and handle any question confidently?
